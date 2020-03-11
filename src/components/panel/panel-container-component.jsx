@@ -8,7 +8,12 @@ export default function panel(props){
        <div className="panel-container">
             <AddUser 
                 funcionAgregar={props.funcionAgregar}
-                funcionObtenerPersona={props.funcionObtenerPersona}
+                funcionObtenerNombre={props.funcionObtenerNombre}
+                funcionObtenerEmail={props.funcionObtenerEmail}
+                nombre={props.nombre}
+                email={props.email}
+                validacion={props.validacion}
+                mensajeError={props.mensajeError}
             />
             <SearchUser 
                 funcionBuscar={props.funcionBuscar}

@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
+import Avatar from '@material-ui/core/Avatar';
 import './card-style.css';
 
 const useStyles = makeStyles(theme => ({
@@ -14,6 +15,9 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column",
   },
 }));
 
@@ -26,6 +30,9 @@ export default function Card(props){
         elevation={3} 
         className={classes.paper}
         >
+      <div className={classes.root}>
+        <Avatar>H</Avatar>
+      </div>
         <p>{props.nombre}</p>
         <p>{props.email}</p>
         <IconButton 

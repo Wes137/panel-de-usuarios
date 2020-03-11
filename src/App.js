@@ -10,20 +10,41 @@ class App extends Component{
     super();
     this.state = {
       personas: [],
-      respaldoPersonas: []
+      nombre: "",
+      email: "",
+      buscarPersona: "",
+      respaldoPersonas: [],
+      camposValidos: false,
+      mensajeError: ""
     }
   }
 
   agregarTarjeta = () => {
-    let personasModificadas = this.state.personas;
-    personasModificadas.push({
-      "id": 1,
-      "name": this.state.nombre,
-      "username": "Bret",
-      "email": "Sincere@april.biz",    
-    });
-    this.setState({personas: personasModificadas});
-    this.setState({respaldoPersonas: personasModificadas});
+
+    if(this.state.nombre.length > 0 && this.state.email.length > 0){
+      let personasModificadas = this.state.personas;
+      let arregloIndices = this.state.personas.map( persona => persona.id);
+      let indice = arregloIndices[arregloIndices.length-1] + 1; 
+      
+      personasModificadas.push({
+        "id": indice,
+        "name": this.state.nombre,
+        "username": "Bret",
+        "email": this.state.email,    
+      });
+  
+      //Agregar los nuevos estados
+      this.setState({personas: personasModificadas});
+      this.setState({respaldoPersonas: personasModificadas});   
+      
+      //Quitar el valor actual para los dos componentes de texto
+      this.setState({nombre: ""});
+      this.setState({email: ""});
+    }else{
+      alert("Hay campos vacios");
+      this.setState({camposValidos: true});
+      this.setState({mensajeError: "Completa este campo"});
+    }
   }
 
   componentDidMount(){
@@ -35,8 +56,24 @@ class App extends Component{
       })
   }
 
-  obtenerPersona = (event) => {
+  obtenerNombre = (event) => {    
     this.setState({nombre: event.target.value});
+    if(event.target.value.length > 0){
+      this.setState({camposValidos: false});
+      this.setState({mensajeError: ""});
+    }else{
+      this.setState({camposValidos: true});
+    }
+  }
+
+  obtenerEmail = (event) => {    
+    this.setState({email: event.target.value});
+    if(event.target.value.length > 0){
+      this.setState({camposValidos: false});
+      this.setState({mensajeError: ""});
+    }else{
+      this.setState({camposValidos: true});
+    }
   }
 
   listaPersonas = (event) => {
@@ -53,9 +90,11 @@ class App extends Component{
   }
   
   borrarPersona = (event, id) => {
-    let personasActualiza = this.state.personas.filter(personas => personas.id !== id);
-    this.setState({personas: personasActualiza});
-    
+    let getPersonaIndex = this.state.personas.map( persona => persona.id );
+    getPersonaIndex = getPersonaIndex.indexOf(id);
+    let arregloPersonas = this.state.personas;
+    arregloPersonas.splice(getPersonaIndex, 1);
+    this.setState({personas: arregloPersonas});
   }
 
   render(){
@@ -68,8 +107,13 @@ class App extends Component{
           />
           <Panel
             funcionAgregar={this.agregarTarjeta}
-            funcionObtenerPersona={this.obtenerPersona}
+            funcionObtenerNombre={this.obtenerNombre}
+            funcionObtenerEmail={this.obtenerEmail}
             funcionBuscar={this.listaPersonas}
+            nombre={this.state.nombre}
+            email={this.state.email}
+            validacion={this.state.camposValidos}
+            mensajeError={this.state.mensajeError}
           />
           <CardContainer
               personas={this.state.personas}

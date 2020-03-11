@@ -31,7 +31,7 @@ const CardContainer = (props) => {
                           />                            
                       )
                   })
-              }                                            
+              }
           </Grid>
       </div>
   )

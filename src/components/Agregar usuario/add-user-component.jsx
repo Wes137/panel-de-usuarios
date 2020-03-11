@@ -24,8 +24,20 @@ const useStyles = makeStyles(theme => ({
         <form className={`form-container ${classes.root}`} noValidate autoComplete="off">
                 <TextField 
                   variant="outlined" 
-                  label="Agregar" 
-                  onChange={ props.funcionObtenerPersona } 
+                  label="Nombre" 
+                  onChange={ props.funcionObtenerNombre }
+                  value={props.nombre} 
+                  error={props.validacion}
+                  helperText={props.mensajeError}
+                  defaultValue=""
+                  />
+                  <TextField 
+                  variant="outlined" 
+                  label="Email" 
+                  onChange={ props.funcionObtenerEmail } 
+                  value={props.email} 
+                  error={props.validacion}
+                  helperText={props.mensajeError}
                   />
                 <Button
                     variant="contained"
